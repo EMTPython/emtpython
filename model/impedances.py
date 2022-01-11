@@ -22,4 +22,4 @@ class Capacitance(Circuit):
 
     def __init__(self, name, id, f_id, t_id, capacitance):
         super().__init__(self, name, id, f_id, t_id)
-        self.inductance = capacitance
+        self.capacitance = capacitance

@@ -15,7 +15,6 @@ class Node:
         self.name = name          # freely user defined node public name
         self.id = id              # exclusive identificator (handled elsewhere)
         self.circuits = circuits  # connected circuits identifiers
-        self.voltage = 0.0        # node voltage
 
     # the get and set methods were left for Python to handle
 

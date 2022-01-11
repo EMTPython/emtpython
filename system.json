@@ -1,0 +1,41 @@
+{
+  "name": "Simple power system v1.0",
+  "parameters": {
+    "stop": 10.0,
+    "dT": 0.00001,
+    "frequency": 60.0
+  },
+  "nodes": {
+    "1": {
+      "name": "source",
+      "circuits": ["voltage source", "resistor"]
+    },
+    "2": {
+      "name": "load",
+      "circuits": ["resistor", "inductor"]
+    }
+  },
+  "circuits": {
+    "resistor": {
+      "name": "resistor",
+      "f_id": "1",
+      "t_id": "2",
+      "resistance": 1.0
+    },
+    "inductor": {
+      "name": "inductor",
+      "f_id": "2",
+      "t_id": "0",
+      "inductance": 1.0
+    }
+  },
+  "sources": {
+    "voltage source": {
+      "name": "voltage source",
+      "f_id": "1",
+      "t_id": "0",
+      "voltage": 10.0,
+      "angle": 0.0
+    }
+  }
+}

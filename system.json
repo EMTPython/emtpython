@@ -3,7 +3,7 @@
   "parameters": {
     "stop": 10.0,
     "dT": 0.00001,
-    "frequency": 60.0
+    "frequency": 1.0
   },
   "nodes": {
     "1": {
@@ -27,6 +27,12 @@
       "f_id": "2",
       "t_id": "0",
       "inductance": 1.0
+    },
+    "capacitor": {
+      "name": "capacitor",
+      "f_id": "2",
+      "t_id": "0",
+      "capacitance": 0.00001
     }
   },
   "sources": {

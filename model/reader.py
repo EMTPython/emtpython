@@ -11,7 +11,7 @@ from model.source import Current
 
 from model.node import Node
 
-Rth = 1.E-12
+Rth = 1.E-30
 
 class Reader:
 
@@ -21,10 +21,14 @@ class Reader:
         try:
             with open(json, 'r') as f:
                 self.json = js.load(f)
+            self.data = {
+                'stop': self.json['parameters']['stop'],
+                'dT': self.json['parameters']['dT'],
+                'frequency': self.json['parameters']['frequency']
+            } # consolidated dictionary with converted objects
         except Exception as error:
             print(error)
             self.json = {}
-        self.data = {} # consolidated dictionary with converted objects
 
     def readNodes(self):
         # reads the components in node
@@ -89,6 +93,7 @@ class Reader:
     # presenting systems consolidated data
     def log(self):
         print('\nSystem data: ')
+        print('Frequency: ' + str(self.data['frequency']))
         for node in self.data['nodes']:
             node.log()
         for circuit in self.data['circuits']:

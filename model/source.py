@@ -6,6 +6,7 @@ difference and a current is able to flow actively.
 '''
 
 from model.circuit import Circuit
+import math
 
 class Voltage(Circuit):
 
@@ -21,6 +22,9 @@ class Voltage(Circuit):
         self.voltage = voltage     # nominal PEAK voltage in Volts
         self.angle = angle         # nominal angle in degrees
         self.frequency = frequency # frequency in Hertz
+
+    def phasor(self):
+        return self.voltage * math.cos(self.angle * math.pi / 180.) + 1j * self.voltage * math.sin(self.angle * math.pi / 180.)
 
     # method to create an instance from json object
     @staticmethod
@@ -41,6 +45,9 @@ class Current(Circuit):
         self.current = current     # nominal PEAK current in Amps
         self.angle = angle         # nominal angle in degrees
         self.frequency = frequency # frequency in Hertz
+
+    def phasor(self):
+        return self.current * math.cos(self.angle * math.pi / 180.) + 1j * self.current * math.sin(self.angle * math.pi / 180.)    
 
     # method to create an instance from json object
     @staticmethod

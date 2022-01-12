@@ -5,6 +5,7 @@ import numpy as np
 
 from model.validation import Validation
 from model.reader import Reader
+from model.solver import Solver
 
 from model.impedances import Resistor
 from model.impedances import Inductor
@@ -24,7 +25,6 @@ validator = Validation(json)
 reader = Reader(json)
 
 # validating components
-
 nameValid = validator.validateName()
 parametersValid = validator.validateParameters()
 nodesValid = validator.validateNodes()
@@ -47,7 +47,6 @@ if not sourcesValid[0]:
     stop(sourcesValid[1])
 
 # verifing repeated connections
-
 idsChecked = validator.checkIds()
 
 if not idsChecked[0]:
@@ -56,13 +55,17 @@ if not idsChecked[0]:
 # processing input data
 
 # transforming json in objects according to existing models
-
 reader.readNodes()
 reader.readCircuits()
 reader.readSources()
 reader.convertSources()
 
 reader.log()
+
+# solving the circuit
+solver = Solver(reader.data)
+
+solver.steadyState()
 
 # ending simulation
 stop('Simulation finished succesfully!')

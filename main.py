@@ -60,6 +60,9 @@ if not idsChecked[0]:
 reader.readNodes()
 reader.readCircuits()
 reader.readSources()
+reader.convertSources()
+
+reader.log()
 
 # ending simulation
 stop('Simulation finished succesfully!')

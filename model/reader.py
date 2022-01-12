@@ -11,6 +11,8 @@ from model.source import Current
 
 from model.node import Node
 
+Rth = 1.E-12
+
 class Reader:
 
     # the json file must be valid, the validator does this process
@@ -61,4 +63,35 @@ class Reader:
                 self.data['sources'].append(Current.json(source, sources[source], frequency))
         print('Sources processed: ')
         for source in self.data['sources']:
-            source.log()        
+            source.log()
+
+    # preparing sources for simulation, converting all voltage sources into current sources
+    def convertSources(self):
+        for i in range(len(self.data['sources'])):
+            source = self.data['sources'][i]
+            if str(type(source).__name__) == 'Voltage':
+                source = Current(source.name, source.id, source.f_id, source.t_id, source.voltage / Rth, source.angle, source.frequency)
+                thevenin = Resistor('fictional thevenin', 'th <> ' + source.id, source.f_id, source.t_id, Rth)
+                self.data['circuits'].append(thevenin)
+                if source.f_id != '0':
+                    for node in self.data['nodes']:
+                        if node.id == source.f_id:
+                            node.circuits.append(thevenin.id)
+                if source.t_id != '0':
+                    for node in self.data['nodes']:
+                        if node.id == source.t_id:
+                            node.circuits.append(thevenin.id)
+            self.data['sources'][i] = source
+            # print(source.current)
+        print('Sources converted!')
+        # print(self.data)
+
+    # presenting systems consolidated data
+    def log(self):
+        print('\nSystem data: ')
+        for node in self.data['nodes']:
+            node.log()
+        for circuit in self.data['circuits']:
+            circuit.log()
+        for source in self.data['sources']:
+            source.log()

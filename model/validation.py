@@ -7,8 +7,8 @@ class Validation:
     def __init__(self, json):
         # the parameter json is the json file path
         try:
-            f = open(json, 'r')
-            self.json = js.load(f)
+            with open(json, 'r') as f:
+                self.json = js.load(f)
         except Exception as error:
             print(error)
             self.json = {}
@@ -38,6 +38,8 @@ class Validation:
             return (False, 'The field nodes is missing in the input file...') # nodes list empty or inexistent
         nodes = self.json['nodes']
         for node in nodes:
+            if node == '0':
+                return (False, 'There is no need to create the ground node...')
             if 'name' not in nodes[node] or 'circuits' not in nodes[node]:
                 return (False, 'One of the necessary fields of node is missing for node -> ' + node) # nodes fields missing
             if not isinstance(nodes[node]['name'], str):

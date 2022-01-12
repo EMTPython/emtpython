@@ -3,7 +3,17 @@
 import pandas as pd
 import numpy as np
 
-from controllers.validation import Validation
+from model.validation import Validation
+from model.reader import Reader
+
+from model.impedances import Resistor
+from model.impedances import Inductor
+from model.impedances import Capacitor
+
+from model.source import Voltage
+from model.source import Current
+
+from model.node import Node
 
 def stop(message):
     print('Exiting simulation with message: ' + message)
@@ -11,6 +21,7 @@ def stop(message):
 
 json = 'C:\emtpython\system.json'
 validator = Validation(json)
+reader = Reader(json)
 
 # validating components
 
@@ -42,9 +53,13 @@ idsChecked = validator.checkIds()
 if not idsChecked[0]:
     stop(idsChecked[1])
 
-# proccessing input data
+# processing input data
 
 # transforming json in objects according to existing models
+
+reader.readNodes()
+reader.readCircuits()
+reader.readSources()
 
 # ending simulation
 stop('Simulation finished succesfully!')

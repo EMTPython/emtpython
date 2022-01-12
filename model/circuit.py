@@ -20,3 +20,6 @@ class Circuit:
         self.t_id = t_id   # to node identificator
 
     # the get and set methods were left to Python to handle
+
+    def log(self):
+        print('Circuit with id: ' + self.id + '; name: ' + self.name + '; from: ' + self.f_id + '; to: ' + self.t_id)   
